@@ -4,7 +4,7 @@ import argon2, { hash } from 'argon2'
 import { sendWelcomeEmail } from '#services/mailing/welcome-email.js'
 import jwt from 'jsonwebtoken'
 
-export async function index (ctx) {
+export async function index(ctx) {
   try {
     const user = await UserModel.find({})
     ctx.ok(user)
@@ -13,49 +13,48 @@ export async function index (ctx) {
   }
 }
 
-export async function id (ctx) {
+export async function id(ctx) {
   try {
-    if(!ctx.params.id) throw new Error('No id supplied')
+    if (!ctx.params.id) throw new Error('No id supplied')
     const user = await UserModel.findById(ctx.params.id)
-    if(!user) { return ctx.notFound() }
+    if (!user) { return ctx.notFound() }
     ctx.ok(user)
   } catch (e) {
     ctx.badRequest({ message: e.message })
   }
 }
 
-export async function register (ctx) {
- try {
-  const registerValidationSchema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
-    terms_and_conditions: Joi.boolean().required(),
-
-  })
-  const params = ctx.request.body
-  const { error, value } = registerValidationSchema.validate(params)
-  if(error) throw new Error(error)
-  const hashedPassword = await argon2.hash(value.password)
-  const newUser = new UserModel({
-    ...value,
-    password: hashedPassword,
-    settings : {
-      terms_and_conditions : value.terms_and_conditions
-    }
-  })
-  newUser.generateEmailVerificationToken()
-  // newUser.generateJWT() 
-  const user = await newUser.save()
-  await sendWelcomeEmail(user, user.settings.validation_email_token)
-  ctx.ok(newUser)
-  console.log(newUser)
- } catch(e) {
-  ctx.badRequest({ message: e.message })
- }
+export async function register(ctx) {
+  try {
+    const registerValidationSchema = Joi.object({
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).required(),
+      terms_and_conditions: Joi.boolean().required(),
+    })
+    const params = ctx.request.body
+    const { error, value } = registerValidationSchema.validate(params)
+    if (error) throw new Error(error)
+    const hashedPassword = await argon2.hash(value.password)
+    const newUser = new UserModel({
+      ...value,
+      password: hashedPassword,
+      settings: {
+        terms_and_conditions: value.terms_and_conditions
+      }
+    })
+    newUser.generateEmailVerificationToken()
+    // newUser.generateJWT() 
+    const user = await newUser.save()
+    await sendWelcomeEmail(user, user.settings.validation_email_token)
+    ctx.ok(newUser)
+    console.log(newUser)
+  } catch (e) {
+    ctx.badRequest({ message: e.message })
+  }
 }
 
 
-export async function login (ctx) {
+export async function login(ctx) {
   try {
     const registerValidationSchema = Joi.object({
       email: Joi.string().email().required(),
@@ -63,7 +62,7 @@ export async function login (ctx) {
     })
     const params = ctx.request.body
     const { error, value } = registerValidationSchema.validate(params)
-    if(error) throw new Error(error)
+    if (error) throw new Error(error)
 
     const userEmail = await UserModel.findOne({ email: value.email }).select('email')
     const email_login = await ctx.request.body.email
@@ -92,7 +91,7 @@ export async function login (ctx) {
   }
 }
 
-export async function profile (ctx) {
+export async function profile(ctx) {
   try {
 
     console.log(ctx.state.user)
@@ -103,7 +102,7 @@ export async function profile (ctx) {
   }
 }
 
-export async function profileUpdate (ctx) {
+export async function profileUpdate(ctx) {
   try {
 
     // console.log(ctx.state.user.id)
@@ -113,12 +112,12 @@ export async function profileUpdate (ctx) {
       password: Joi.string().min(6).required()
     })
 
-    if(!ctx.state.user.id) throw new Error('No id supplied')
+    if (!ctx.state.user.id) throw new Error('No id supplied')
     const { error, value } = profileValidationSchema.validate(ctx.request.body)
-    if(error) throw new Error(error)
+    if (error) throw new Error(error)
 
     const hashedPassword = await argon2.hash(value.password)
-    const updatedUserProfile = await UserModel.findByIdAndUpdate(ctx.state.user.id, {...value, password: hashedPassword}, { runValidators: true, new: true })
+    const updatedUserProfile = await UserModel.findByIdAndUpdate(ctx.state.user.id, { ...value, password: hashedPassword }, { runValidators: true, new: true })
 
     console.log(hashedPassword)
 

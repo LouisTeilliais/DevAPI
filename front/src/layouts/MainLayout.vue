@@ -9,9 +9,10 @@
             style="width: 5rem; height: 5rem"
           />
         </q-toolbar-title>
-        <Router-link to="/login">
+        <!-- <Router-link to="/login">
           Se connecter
-        </Router-link>
+        </Router-link> -->
+        <q-btn flat style="color=accent" label="Se connecter" to="/login"/>
         <q-btn outline label="S'incrire" color="accent" no-caps class="q-mx-md" to="/register"/>
       </q-toolbar>
     </q-header>

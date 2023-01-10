@@ -1,14 +1,14 @@
 <template>
     <div class="q-pa-xl">
       <div class="flex flex-center column">
-        <h1>Inscrivez-vous</h1>
+        <h1 class="q-py-xl text-accent">Inscrivez-vous</h1>
         <q-card>
             <q-card-section>
                 <q-input label="Email" type="email" outlined class="q-mb-md" v-model="form.email" />
-                <q-input label="Mot de passe" type="password" outlined class="q-mb-md" v-model="form.password" :rules="[ val => val.length >= 6 || 'Minimum 6 caractère']" />
-                <q-checkbox label="terms and conditions" v-model="form.terms_and_conditions"/>
-                <q-btn label="S'incrire" class="full-width" color="primary" @click="handleRegister"/>
-                <p>Vous avez déjà un compte ? <a href="">Connectez-vous</a></p>
+                <q-input label="Mot de passe" type="password" outlined class="q-mt-lg" v-model="form.password" :rules="[ val => val.length >= 6 || 'Minimum 6 caractère']" />
+                <q-checkbox label="Termes et conditions" v-model="form.terms_and_conditions"/>
+                <q-btn label="S'incrire" class="full-width q-mt-lg" color="accent" @click="handleRegister"/>
+                <p class="q-mt-lg">Vous avez déjà un compte ? <a href="/login">Connectez-vous</a></p>
             </q-card-section>
         </q-card>
       </div>

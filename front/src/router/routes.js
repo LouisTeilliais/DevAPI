@@ -4,9 +4,10 @@ const isAuthenticated = async (to, from) => {
   const isAuthenticated = LocalStorage.getItem('token') || SessionStorage.getItem('token')
   if (!isAuthenticated && to.name !== 'homepage') {
     return { name: 'homepage' }
-  } else {
-    return { name: 'dashboard' }
   }
+  // else {
+  //   return { name: 'dashboard' }
+  // }
 }
 
 const routes = [

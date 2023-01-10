@@ -2,7 +2,6 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { useUserStore } from 'stores/user-store'
 import { Loading } from 'quasar'
-
 const userStore = useUserStore()
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
