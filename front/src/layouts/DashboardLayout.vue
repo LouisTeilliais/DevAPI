@@ -10,11 +10,7 @@
           /> -->
           Lewis App
         </q-toolbar-title>
-        <!-- <Router-link to="/login">
-          Se connecter
-        </Router-link> -->
-        <q-btn flat style="color=accent" label="Se connecter" to="/login"/>
-        <q-btn outline label="S'incrire" color="accent" no-caps class="q-mx-md" to="/register"/>
+        <h6 class="text-negative">Tableau de bord</h6>
       </q-toolbar>
     </q-header>
     <q-page-container>
