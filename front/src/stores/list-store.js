@@ -19,6 +19,7 @@ export const useListStore = defineStore('user', {
     async getLists() {
       const res = await getAllLists()
       console.log(res)
+      LocalStorage.set('lists', res.data)
     }
     // async handleRegister(params) {
     //   try {
