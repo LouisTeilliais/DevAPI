@@ -71,7 +71,7 @@ export async function login(ctx) {
 
     // check le email et le password si l'utilisateur si il existe
     if (userEmail.email == email_login && await argon2.verify(hashPassword.password, password_login)) {
-      console.log("Email existe and password match !")
+      console.log("Email exist and password match !")
       ctx.body = "Email and password match"
 
       //Generate un token pour l'utilisateur actuel

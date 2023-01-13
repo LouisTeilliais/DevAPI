@@ -23,6 +23,7 @@
               <div class="flex flex-center">
                 <div class="col">
                   <div class="text-h2">{{ list.title }}</div>
+                  <p>{{ list._id }}</p>
                 </div>
 
                 <div class="col-auto">
@@ -36,7 +37,7 @@
                           <q-item-section>Modifier</q-item-section>
                         </q-item>
                         <q-item clickable>
-                          <q-item-section class="text-red-10">Supprimer</q-item-section>
+                          <q-item-section class="text-red-10" @click="deleteTask(list._id)">Supprimer</q-item-section>
                         </q-item>
                       </q-list>
                     </q-menu>
@@ -63,6 +64,7 @@
 import { useQuasar, Notify } from 'quasar'
 import { useListStore } from 'src/stores/list-store'
 import { ref, onMounted } from 'vue'
+import { deleteList } from '../../services/lists'
 
 const listStore = useListStore()
 
@@ -93,12 +95,16 @@ onMounted(async () => {
   }
 })
 
-// const getTaskById = () => {
-
-// }
-
-// const deleteTask = () => {
-
-// }
+const deleteTask = async (id) => {
+  try {
+    await deleteList(id)
+    location.reload()
+    // await listStore.getAllLists
+    console.log('delete task ' + id)
+  } catch (error) {
+    Notify.create('Error during deleting list')
+    console.log(error)
+  }
+}
 
 </script>

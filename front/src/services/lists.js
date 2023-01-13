@@ -4,12 +4,12 @@ export const getAllLists = () => {
   return api.get('/lists')
 }
 
-export const getListById = () => {
-  return api.get('/lists/:id')
-}
+// export const getListById = () => {
+//   return api.get('/lists/:id')
+// }
 
-export const deleteList = () => {
-  return api.delete('/list/:id')
+export const deleteList = (id) => {
+  return api.delete('/lists/' + id)
 }
 
 export const createList = () => {
