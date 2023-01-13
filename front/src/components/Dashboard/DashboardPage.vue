@@ -9,7 +9,7 @@
       <br>
       <h2 class="text-h2 text-weight-thin text-dark q-ma-lg">Tu n’as aucune liste de tâche pour le moment créer en une en cliquant sur le bouton ci-dessous dans le menu pour débuter</h2 >
         <q-btn label="Créer une liste" size="1.5rem" color="accent" @click="dialogCreate" />
-        <q-btn label="Get liste" size="1.5rem" color="accent" @click="getLists" />
+        <!-- <q-btn label="Get liste" size="1.5rem" color="accent" @click="getLists" /> -->
       </div>
 
       <div v-else>
@@ -17,7 +17,7 @@
             Hello 👋
           </h1>
         <h2 class="text-h2 flex flex-center text-weight-thin text-dark q-ma-lg ">Voici les dernières tâches que tu as ajoutés</h2 >
-        <div v-for="(list,index) in lists" :key="index">
+        <div class="card" v-for="(list,index) in lists" :key="index">
           <q-card flat bordered class="my-card bg-grey-4 q-ma-lg">
             <q-card-section>
               <div class="flex flex-center">
@@ -51,7 +51,9 @@
               <q-btn label="Voir liste" size="1.2rem" color="accent" />
             </q-card-actions>
           </q-card>
+
         </div>
+        <q-btn label="Ajouter une liste" size="1.5rem" color="accent" @click="dialogCreate" />
       </div>
     </q-page>
 
@@ -59,8 +61,10 @@
 
 <script setup>
 import { useQuasar, Notify } from 'quasar'
-import { getAllLists } from 'src/services/lists'
-import { ref } from 'vue'
+import { useListStore } from 'src/stores/list-store'
+import { ref, onMounted } from 'vue'
+
+const listStore = useListStore()
 
 const quasar = useQuasar()
 const lists = ref([])
@@ -71,21 +75,30 @@ const dialogCreate = () => {
     message: 'Nom de la liste',
     prompt: {
       model: '',
-      type: 'text' // optional
+      type: 'text'
     },
     cancel: true,
-    persistent: true
+    persistent: true,
+    square: true
   })
 }
 
-const getLists = async () => {
+onMounted(async () => {
   try {
-    const res = await getAllLists()
-    lists.value = res.data
-    console.log(res.data)
-  } catch (e) {
-    Notify.create('Something went wrong with the loading of lists')
+    const allLists = await listStore.getAllLists()
+    lists.value = allLists.data
+  } catch (err) {
+    Notify.create('Error during loading of list', err)
+    console.log(err)
   }
-}
+})
+
+// const getTaskById = () => {
+
+// }
+
+// const deleteTask = () => {
+
+// }
 
 </script>
