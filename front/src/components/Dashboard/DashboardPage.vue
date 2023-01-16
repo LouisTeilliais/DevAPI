@@ -31,10 +31,10 @@
         </div>
           <hr>
           <div class="card" v-for="(list,index) in lists" :key="index">
-            <q-card flat bordered class="my-card bg-grey-3 q-ma-lg" style="border-radius: 10px;">
+            <q-card flat bordered class="my-card bg-grey-3 q-ma-lg" style="border-radius: 10px; min-height: 3rem; min-width: 20rem;">
               <q-card-section >
                 <div  style="border-radius: 10px;" class="flex flex-center">
-                  <div style="min-height: 5rem; min-width: 20rem;" class="col">
+                  <div style="min-height: 3rem" class="col">
                     <div class="text-h3 q-mt-lg">{{ list.title }}</div>
                   </div>
                   <div class="col-auto ">
@@ -59,7 +59,17 @@
               <q-separator />
 
               <q-card-actions class="column bg-white">
-                <!-- <h4 class="text-h4 text-weight-light text-dark q-ma-lg">Cette liste ne contient aucune tâches ajoutez en une depuis la liste</h4 > -->
+                <div v-if="list.tasks && list.tasks.length > 0 ">
+                  <div v-for="(task, index) in list.tasks" :key="index">
+                    <div class="text-h3 text-weight-medium q-ma-md float-left text-accent">
+                      {{ task.title }}
+                      <hr class="q-mb-md">
+                    </div>
+                  </div>
+                </div>
+                <div v-else>
+                    <h4 class="text-h4 text-weight-light text-dark q-ma-lg text-accent">Cette liste ne contient aucune tâches ajoutez en une depuis la liste</h4 >
+                </div>
                 <div class="q-ma-xs">
                   <q-btn label="Voir ma liste" class="q-ma-lg" @click="redirectWithParams(list._id)" style="border-radius: 10px; " size="1.2rem" color="accent" />
                 </div>
@@ -170,6 +180,7 @@ onMounted(async () => {
   try {
     const allLists = await listStore.getAllLists()
     lists.value = allLists.data
+    console.log(allLists.data)
   } catch (err) {
     Notify.create('Error during loading of list', err)
     console.log(err)
