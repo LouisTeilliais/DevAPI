@@ -17,7 +17,6 @@ const routes = [
     children: [
       { path: '', name: 'homepage', component: () => import('pages/IndexPage.vue') },
       { path: 'tuto', name: 'tuto', component: () => import('pages/TutoPage.vue') },
-      // { path: 'tuto/:id', name: 'tuto-params', component: () => import('src/pages/TutoPage.vue') },
       { path: 'login', name: 'logIn', component: () => import('src/components/Auth/LoginPage.vue') },
       { path: 'register', name: 'register', component: () => import('src/components/Auth/RegisterPage.vue') }
     ]
@@ -27,6 +26,14 @@ const routes = [
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
       { path: '', name: 'dashboard', component: () => import('src/components/Dashboard/DashboardPage.vue') }
+    ],
+    beforeEnter: isAuthenticated
+  },
+  {
+    path: '/',
+    component: () => import('layouts/DashboardLayout.vue'),
+    children: [
+      { path: 'task/:id', name: 'task', component: () => import('src/components/Tasks/TaskPage.vue') }
     ],
     beforeEnter: isAuthenticated
   },

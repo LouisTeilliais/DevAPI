@@ -24,12 +24,12 @@ const taskSchema = new Schema({
     required: true,
     ref: 'User'
   }
-}, { 
+}, {
   timestamps: true
 })
 
 taskSchema.static({
-  findByListId (listId) {
+  findByListId(listId) {
     return this.find({ list: listId })
   },
   findOneByCreatorId(creatorId, taskId) {

@@ -3,16 +3,12 @@
     <q-header elevated class="bg-white  text-black">
       <q-toolbar>
         <q-toolbar-title>
-          <!-- <q-img
+          <q-img
             alt="Quasar logo"
             src="../../public/icons/logo.png"
             style="width: 5rem; height: 5rem"
-          /> -->
-          Lewis App
+          />
         </q-toolbar-title>
-        <!-- <Router-link to="/login">
-          Se connecter
-        </Router-link> -->
         <q-btn flat style="color=accent" label="Se connecter" to="/login"/>
         <q-btn outline label="S'incrire" color="accent" no-caps class="q-mx-md" to="/register"/>
       </q-toolbar>

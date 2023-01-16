@@ -8,7 +8,7 @@
               <q-input label="Mot de passe" type="password" outlined class="q-mb-md q-mt-lg" v-model="form.password" :rules="[ val => val.length >= 6 || 'Minimum 6 caractère']" />
               <q-btn label="Se connecter" class="full-width" color="accent" @click="handleLogin"/>
               <p class="q-mt-lg">Vous n'avez pas de compte ? <a href="/register">Inscivez vous</a></p>
-          </q-card-section>
+            </q-card-section>
       </q-card>
     </div>
   </div>
