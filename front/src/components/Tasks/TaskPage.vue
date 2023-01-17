@@ -172,11 +172,8 @@ onMounted(async () => {
   const listId = route.params.id
   const tasksByList = await tasksStore.getTaskByList(listId)
   tasks.value = tasksByList.data
-  console.log(tasksByList.data)
-  console.log()
   const listValue = await tasksStore.getListById(listId)
   list.value = listValue
-  console.log(taskModel.value.list)
 })
 
 const createOneTask = async () => {
@@ -203,7 +200,7 @@ const deleteOneTask = async (id) => {
 
 const updateOneTask = async (id) => {
   try {
-    await updateTask(id, { title: selectedTask.value.title, description: selectedTask.value.description, done: selectedTask.value.done })
+    await updateTask(id, { title: selectedTask.value.title, description: selectedTask.value.description })
     location.reload()
   } catch (error) {
     Notify.create('Error during update list')
